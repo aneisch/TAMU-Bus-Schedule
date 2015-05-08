@@ -8,6 +8,7 @@ import urllib2
 
 times = []
 
+#Put the url of your route here
 html = urllib2.urlopen('http://transport.tamu.edu/BusRoutes/Routes.aspx?r=35#').read()
 soup = BeautifulSoup(html)
 initial = str(soup.findAll('table', attrs={'class':'timetable'}))
@@ -27,10 +28,11 @@ for line in processed:
 
 if service == True:
     for i in times:
+        #You'll have to fix these names, indexes too I imagine, to match your route
 	if len(i) == 3:
 	    print "Jones Butler: " + i[0][-6:], "--- District: " + i[1][-6:], "--- MSC: " + i[2][-6:]
 	if len(i) == 4:
 	    print "Jones Butler: " + i[1][-6:], "--- District: " + i[2][-6:], "--- MSC: " + i[3][-6:]
 else:
    pass
-   #print times
+   print times
