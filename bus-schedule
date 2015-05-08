@@ -1,0 +1,36 @@
+#!/usr/bin/python2
+
+#Parse Bus ish to tell me the times
+
+import datetime
+from BeautifulSoup import BeautifulSoup
+import urllib2
+
+times = []
+
+html = urllib2.urlopen('http://transport.tamu.edu/BusRoutes/Routes.aspx?r=35#').read()
+soup = BeautifulSoup(html)
+initial = str(soup.findAll('table', attrs={'class':'timetable'}))
+processed = initial.split("\n")
+
+for line in processed:
+    if "datetime" not in line:
+        if "No Service Is Scheduled" in line:
+           times = "No Service Scheduled For Today"
+           service = False
+           break
+    else:
+        line = line.strip('<td><time datetime="').replace('</td><td><time datetime="','').replace('">'," ").strip('/td><td><time datetime="').strip('&nbsp;</td><td><time datetime="')
+        line = line.split("</time>")
+        times.append(line)
+        service = True
+
+if service == True:
+    for i in times:
+	if len(i) == 3:
+	    print "Jones Butler: " + i[0][-6:], "--- District: " + i[1][-6:], "--- MSC: " + i[2][-6:]
+	if len(i) == 4:
+	    print "Jones Butler: " + i[1][-6:], "--- District: " + i[2][-6:], "--- MSC: " + i[3][-6:]
+else:
+   pass
+   #print times
