@@ -1,7 +1,5 @@
 #!/usr/bin/python2
 
-#Parse Bus ish to tell me the times
-
 import datetime
 from BeautifulSoup import BeautifulSoup
 import urllib2
@@ -34,5 +32,4 @@ if service == True:
 	if len(i) == 4:
 	    print "Jones Butler: " + i[1][-6:], "--- District: " + i[2][-6:], "--- MSC: " + i[3][-6:]
 else:
-   pass
    print times
